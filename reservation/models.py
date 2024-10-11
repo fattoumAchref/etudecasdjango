@@ -17,3 +17,5 @@ class Reservation(models.Model):
         super().clean()
         if self.conference.start_date <= timezone.now():
             raise ValidationError("La réservation ne peut être faite que pour des conférences à venir.")
+    
+    
