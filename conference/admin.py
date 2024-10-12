@@ -1,11 +1,31 @@
 from django.contrib import admin
 from .models import Conference
 from reservation.models import Reservation
-
+from .models import *
 class ReservationInline(admin.TabularInline):  
     model = Reservation
     extra = 1  
 
+class DateFilter(admin.SimpleListFilter):
+    title = 'conference date'
+    parameter_name = 'conference_date'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('past', 'Past Conferences'),
+            ('today', 'Today Conferences'),
+            ('upcoming', 'Upcoming Conferences'),
+        )
+
+    def queryset(self, request, queryset):
+        today = timezone.now()
+        if self.value() == 'past':
+            return queryset.filter(conference_date__lt=today)
+        if self.value() == 'today':
+            return queryset.filter(conference_date=today)
+        if self.value() == 'upcoming':
+            return queryset.filter(conference_date__gt=today)
+        
 @admin.register(Conference)
 class ConferenceAdmin(admin.ModelAdmin):
 
@@ -34,6 +54,7 @@ class ConferenceAdmin(admin.ModelAdmin):
         'start_date',
         ('capacity', admin.BooleanFieldListFilter),
         'title',
+        DateFilter
     )
     
     def get_queryset(self, request):
