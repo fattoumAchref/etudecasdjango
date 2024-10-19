@@ -1,0 +1,49 @@
+<head>
+    <title>Liste des Conférences</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Liste des Conférences</h1>
+
+        <a href="{% url 'conference_create' %}" class="btn btn-primary mb-4">Ajouter une nouvelle conférence</a>
+
+        <!-- Formulaire de filtrage -->
+        <form method="get" action="{% url 'conference_list' %}">
+            <div class="form-group">
+                <label for="category">Filtrer par catégorie :</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="">Toutes les catégories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.titre }}" {% if request.GET.category == cat.titre %}selected{% endif %}>{{ cat.titre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-secondary mt-2">Filtrer</button>
+        </form>
+
+        <div class="row mt-4">
+            {% for conference in conferences %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'conference_detail' conference.id %}">{{ conference.title }}</a>
+                            </h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Date : {{ conference.start_date }}</h6>
+                            <p class="card-text">{{ conference.category }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'conference_update' conference.id %}" class="btn btn-sm btn-warning">Modifier</a>
+                            <a href="{% url 'conference_delete' conference.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <a href="{% url 'home' %}" class="btn btn-info ml-2">Retour à l'accueil</a>
+    </div>
+</body>

@@ -1,0 +1,27 @@
+
+<head>
+    <title>{% if conference %}Modifier{% else %}Ajouter{% endif %} une Conférence</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">{% if conference %}Modifier{% else %}Ajouter{% endif %} une Conférence</h1>
+
+        <form method="post" enctype="multipart/form-data" class="needs-validation">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.non_field_errors }}
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                {% if conference %}Modifier{% else %}Ajouter{% endif %}
+            </button>
+            <a href="{% url 'conference_list' %}" class="btn btn-secondary ml-2">Annuler</a>
+        </form>
+    </div>
+
+</body>
+

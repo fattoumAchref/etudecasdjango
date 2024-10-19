@@ -4,7 +4,7 @@ from reservation.models import Reservation
 from .models import *
 class ReservationInline(admin.TabularInline):  
     model = Reservation
-    extra = 1  
+    extra = 1 
 
 class DateFilter(admin.SimpleListFilter):
     title = 'conference date'

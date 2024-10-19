@@ -1,0 +1,39 @@
+
+<head>
+    
+    <title>Détails de la Conférence</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">{{ conference.title }}</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><strong>Programme:</strong> {{ conference.program }}</h5>
+                <p class="card-text"><strong>Capacité:</strong> {{ conference.capacity }}</p>
+                <p class="card-text"><strong>Catégorie:</strong> {{ conference.category }}</p>
+                <p class="card-text"><strong>Date de début:</strong> {{ conference.start_date }}</p>
+                <p class="card-text"><strong>Date de fin:</strong> {{ conference.end_date }}</p>
+                <p class="card-text"><strong>Description:</strong> {{ conference.description }}</p>
+            </div>
+            <div>
+                <h2>Réservations</h2>
+                <ul>
+                    {% if reservations %}
+                        {% for reservation in reservations %}
+                            <li>{{ reservation.participant }} - Réservé le {{ reservation.reservation_date }} - statut : {{ reservation.statut }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>Aucune réservation pour cette conférence</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <a href="{% url 'conference_list' %}" class="btn btn-primary mt-4">Retour à la liste</a>
+    </div>
+
+</body>

@@ -1,0 +1,28 @@
+
+<head>
+    <title>Supprimer la Conférence</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-danger mb-4">Voulez-vous vraiment supprimer cette conférence ?</h1>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ conference.title }}</h5>
+                <p class="card-text"><strong>Date de début:</strong> {{ conference.start_date }}</p>
+            </div>
+        </div>
+
+        <form method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+        </form>
+
+        <a href="{% url 'conference_list' %}" class="btn btn-secondary ml-2">Annuler</a>
+    </div>
+
+</body>
+</html>
