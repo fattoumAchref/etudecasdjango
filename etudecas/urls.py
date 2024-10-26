@@ -17,8 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from conference import views as pv
+from participant import views as v
+from django.contrib.auth.views import LogoutView
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('conference/',include('conference.urls')),
-    path('',pv.home, name='home')
+    path('home/',pv.home, name='home'),
+    path('register/', v.register_view, name='register'),
+    path('', v.login_view, name='login'),
+    path('', LogoutView.as_view(), name='logout'),
 ]
